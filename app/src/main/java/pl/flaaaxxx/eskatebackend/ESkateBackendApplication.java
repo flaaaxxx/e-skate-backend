@@ -1,13 +1,13 @@
-package pl.flaaaxxx.eskatebackaned;
+package pl.flaaaxxx.eskatebackend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ESkateBackanedApplication {
+public class ESkateBackendApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ESkateBackanedApplication.class, args);
+        SpringApplication.run(ESkateBackendApplication.class, args);
     }
 
 }

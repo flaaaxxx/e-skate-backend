@@ -9,23 +9,11 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>pl.flaaaxxx</groupId>
-    <artifactId>e-skate-backaned</artifactId>
+    <artifactId>e-skate-backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>e-skate-backaned</name>
-    <description>e-skate-backaned</description>
-    <url/>
-    <licenses>
-        <license/>
-    </licenses>
-    <developers>
-        <developer/>
-    </developers>
-    <scm>
-        <connection/>
-        <developerConnection/>
-        <tag/>
-        <url/>
-    </scm>
+    <name>e-skate-backend</name>
+    <description>e-skate-backend</description>
+
     <properties>
         <java.version>21</java.version>
     </properties>
@@ -114,4 +102,8 @@
         </plugins>
     </build>
 
+    <packaging>pom</packaging>
+    <modules>
+        <module>app</module>
+    </modules>
 </project>
