@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+    <changeSet author="ls" id="Create project table">
+        <createTable tableName="project">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="number" type="varchar(255)" >
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="version" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="nr_wagons" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="avatar" type="text">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="ls" id="Create vehicle table">
+        <createTable tableName="vehicle">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="number" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="project_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="project_id"
+                                 baseTableName="vehicle"
+                                 constraintName="fk_vehicle_project"
+                                 referencedColumnNames="id"
+                                 referencedTableName="project"/>
+        <addUniqueConstraint tableName="vehicle" constraintName="vehicle_key" columnNames="number, project_id"/>
+    </changeSet>
+
+    <changeSet author="ls" id="Create user_tab table">
+        <createTable tableName="user_tab">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="username" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="ls" id="Create details_change table">
+        <createTable tableName="details_change">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="project_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="number" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dispositionDate" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="admissionDate" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creationDate" type="date">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="project_id"
+                                 baseTableName="details_change"
+                                 constraintName="fk_details_change_project"
+                                 referencedColumnNames="id"
+                                 referencedTableName="project"/>
+        <addUniqueConstraint tableName="details_change" constraintName="details_change_key" columnNames="number, project_id"/>
+    </changeSet>
+
+    <changeSet author="ls" id="Create item table">
+        <createTable tableName="item">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="details_change_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="itemNumber" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="itemIndex" type="varchar(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="drawing" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="drawingIndex" type="varchar(10)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="details_change_id"
+                                 baseTableName="item"
+                                 constraintName="fk_item_details_change"
+                                 referencedColumnNames="id"
+                                 referencedTableName="details_change"/>
+        <addUniqueConstraint tableName="item" constraintName="item_key"
+                             columnNames="details_change_id, itemNumber, itemIndex, drawing, drawingIndex"/>
+    </changeSet>
+
+    <changeSet author="ls" id="Create status table">
+        <createTable tableName="status">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(50)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="ls" id="Create status_change table">
+        <createTable tableName="status_change">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="vehicle_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="details_change_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="status_change" baseColumnNames="vehicle_id"
+                                 referencedTableName="vehicle" referencedColumnNames="id"
+                                 constraintName="fk_status_vehicle"/>
+        <addForeignKeyConstraint baseTableName="status_change" baseColumnNames="details_change_id"
+                                 referencedTableName="details_change" referencedColumnNames="id"
+                                 constraintName="fk_status_change"/>
+        <addForeignKeyConstraint baseTableName="status_change" baseColumnNames="status_id"
+                                 referencedTableName="status" referencedColumnNames="id"
+                                 constraintName="fk_status_status"/>
+        <addUniqueConstraint tableName="status_change" constraintName="status-change_key"
+                             columnNames="details_change_id, vehicle_id, status_id"/>
+    </changeSet>
+
+    <changeSet author="ls" id="Create status_item table">
+        <createTable tableName="status_item">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="vehicle_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="details_change_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="item_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="status_item" baseColumnNames="status_id"
+                                 referencedTableName="status" referencedColumnNames="id"
+                                 constraintName="fk_status_item_status"/>
+        <addForeignKeyConstraint baseTableName="status_item" baseColumnNames="vehicle_id"
+                                 referencedTableName="vehicle" referencedColumnNames="id"
+                                 constraintName="fk_status_item_vehicle"/>
+        <addForeignKeyConstraint baseTableName="status_item" baseColumnNames="details_change_id"
+                                 referencedTableName="details_change" referencedColumnNames="id"
+                                 constraintName="fk_status_item_change"/>
+        <addForeignKeyConstraint baseTableName="status_item" baseColumnNames="item_id"
+                                 referencedTableName="item" referencedColumnNames="id"
+                                 constraintName="fk_status_item_item"/>
+        <addUniqueConstraint tableName="status_item" constraintName="status_item_key"
+                             columnNames="details_change_id, vehicle_id, item_id, status_id"/>
+    </changeSet>
+</databaseChangeLog>
