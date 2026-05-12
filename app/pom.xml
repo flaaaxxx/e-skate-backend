@@ -21,11 +21,6 @@
     <dependencies>
         <dependency>
             <groupId>pl.flaaaxxx.eskatebackend</groupId>
-            <artifactId>db-model</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>pl.flaaaxxx.eskatebackend</groupId>
             <artifactId>commons</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
