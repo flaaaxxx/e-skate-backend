@@ -1,17 +1,15 @@
 package pl.flaaaxxx.eskatebackend.controllers;
 
 import com.fasterxml.jackson.annotation.JsonRawValue;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.jooq.Record;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Arrays;
-import java.util.Map;
-import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
@@ -42,9 +40,10 @@ public class RouteController {
         }
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getRoute(@PathVariable String id) {
-        return ResponseEntity.ok(routeRepository.getFullRoute(id));
+    @GetMapping
+    public ResponseEntity<?> getAllRoutes() {
+        List<RouteResponse> features = routeRepository.getAllRoutes();
+        return ResponseEntity.ok(new FeatureCollection(features));
     }
 }
 
@@ -67,5 +66,17 @@ class RouteResponse {
         private String startDate;
         private Double totalDistance;
         private String unit;
+    }
+}
+
+@Data
+@AllArgsConstructor
+class FeatureCollection {
+    private String type = "FeatureCollection";
+    private List<RouteResponse> features;
+
+    public FeatureCollection(List<RouteResponse> features) {
+        this.type = "FeatureCollection";
+        this.features = features;
     }
 }
