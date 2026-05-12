@@ -6,8 +6,5 @@
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
     <include file="changes/changelog-1.0.0.xml" relativeToChangelogFile="true"/>
-    <changeSet id="Create dynamic_of_changes table" author="szyluk">
-        <sqlFile path="changes/create-dynamic-of-changes-table.sql" relativeToChangelogFile="true"/>
-    </changeSet>
 
 </databaseChangeLog>
