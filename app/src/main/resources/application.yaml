@@ -6,6 +6,10 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/changelog-master.xml
+  security:
+    user:
+      name: admin
+      password: admin
 
 cors:
   allowedOrigins: http://localhost:4200

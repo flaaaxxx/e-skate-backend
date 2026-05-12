@@ -44,21 +44,7 @@ public class RouteController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getRoute(@PathVariable String id) {
-        Record record = routeRepository.getFullRoute(id);
-
-        if (record == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        // Zwracamy dedykowany obiekt Response
-        return ResponseEntity.ok(new RouteResponse(
-                record.get("id", String.class),
-                record.get("name", String.class),
-                record.get("start_date").toString(),
-                record.get("total_distance", Double.class),
-                record.get("unit", String.class),
-                record.get("geometry", String.class) // To jest surowy JSON z bazy
-        ));
+        return ResponseEntity.ok(routeRepository.getFullRoute(id));
     }
 
     // Dedykowana klasa wewnętrzna dla odpowiedzi

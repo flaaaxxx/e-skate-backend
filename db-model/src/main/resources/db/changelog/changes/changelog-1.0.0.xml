@@ -37,17 +37,17 @@
         </createIndex>
     </changeSet>
 
-    <!-- 3. Przykładowy INSERT zgodny z Twoim JSON-em -->
-<!--    <changeSet id="3-insert-sample-route" author="eskate">-->
-<!--        <insert tableName="routes">-->
-<!--            <column name="id" value="2SxW5tyVD0o"/>-->
-<!--            <column name="name" value="Trasa z dnia 10.05.2026"/>-->
-<!--            <column name="start_date" valueDate="2026-05-10T14:25:10"/>-->
-<!--            <column name="total_distance" valueNumeric="66723"/>-->
-<!--            <column name="unit" value="km"/>-->
-<!--            &lt;!&ndash; WKT używa formatu: Longitude Latitude &ndash;&gt;-->
-<!--            <column name="path" valueComputed="ST_GeomFromText('LINESTRING(22.248743 52.060687, 22.248743 51.960678, 22.248743 51.860669)', 4326)"/>-->
-<!--        </insert>-->
-<!--    </changeSet>-->
+<!--     3. Przykładowy INSERT zgodny z Twoim JSON-em-->
+    <changeSet id="3-insert-sample-route" author="eskate">
+        <insert tableName="routes">
+            <column name="id" value="2SxW5tyVD0o"/>
+            <column name="name" value="Trasa z dnia 10.05.2026"/>
+            <column name="start_date" valueDate="2026-05-10T14:25:10"/>
+            <column name="total_distance" valueNumeric="66723"/>
+            <column name="unit" value="km"/>
+            <!-- WKT używa formatu: Longitude Latitude -->
+            <column name="path" valueComputed="ST_GeomFromText('LINESTRING(22.248743 52.060687, 22.248743 51.960678, 22.248743 51.860669)', 4326)"/>
+        </insert>
+    </changeSet>
 
 </databaseChangeLog>
