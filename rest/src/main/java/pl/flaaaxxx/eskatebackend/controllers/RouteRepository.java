@@ -53,7 +53,7 @@ public class RouteRepository {
                 .set(ROUTES.START_DATE, dto.getProperties().getDate())
                 .set(ROUTES.TOTAL_DISTANCE, dto.getProperties().getDistance() != null
                         ? BigDecimal.valueOf(dto.getProperties().getDistance())
-                        : null)                .set(ROUTES.UNIT, dto.getProperties().getUnit())
+                        : null).set(ROUTES.UNIT, dto.getProperties().getUnit())
                 // Konwersja Stringa WKT na typ GEOMETRY w MySQL
                 .set(ROUTES.PATH, DSL.field("ST_GeomFromText({0}, 0)", ROUTES.PATH.getType(), wktPath))
                 .execute();
