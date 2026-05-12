@@ -52,6 +52,7 @@ public class RouteController {
 @AllArgsConstructor
 class RouteResponse {
     private String type = "Feature";
+    private String id;
 
     @JsonRawValue // KLUCZOWE: Mówi Jacksonowi: "to już jest JSON, nie dodawaj cudzysłowów"
     private String geometry;
@@ -61,7 +62,6 @@ class RouteResponse {
     @Data
     @AllArgsConstructor
     static class Properties {
-        private String id;
         private String name;
         private String startDate;
         private Double totalDistance;

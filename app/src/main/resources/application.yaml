@@ -20,4 +20,11 @@ springdoc:
     enabled: true
 
 server:
-  port: 8080
+  address: 192.168.1.88
+  port: 443
+  ssl:
+    enabled: true
+    key-store: classpath:keystoreTLS.p12
+    key-store-password: 111111
+    key-store-type: PKCS12
+    key-alias: springboot

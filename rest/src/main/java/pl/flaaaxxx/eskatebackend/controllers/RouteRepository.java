@@ -32,9 +32,9 @@ public class RouteRepository {
                 .from(ROUTES)
                 .fetch(record -> new RouteResponse(
                         "Feature",
+                        record.get(ROUTES.ID),
                         record.get(DSL.field("geometry", String.class)),
                         new RouteResponse.Properties(
-                                record.get(ROUTES.ID),
                                 record.get(ROUTES.NAME),
                                 record.get(ROUTES.START_DATE) != null ? record.get(ROUTES.START_DATE).toString() : null,
                                 record.get(ROUTES.TOTAL_DISTANCE) != null ? record.get(ROUTES.TOTAL_DISTANCE).doubleValue() : null,

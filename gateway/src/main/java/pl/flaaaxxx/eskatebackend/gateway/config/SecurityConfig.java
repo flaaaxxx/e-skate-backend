@@ -31,7 +31,7 @@ public class SecurityConfig {
     // Wydzielona metoda konfiguracji CORS
     private CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:4200", "https://localhost:4200", "https://localhost:4202"));
+        config.setAllowedOrigins(List.of("http://localhost:4200", "https://localhost:4200", "https://localhost:4202", "https://192.168.1.88:4200"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
