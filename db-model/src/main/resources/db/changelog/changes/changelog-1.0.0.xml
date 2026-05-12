@@ -45,8 +45,7 @@
             <column name="start_date" valueDate="2026-05-10T14:25:10"/>
             <column name="total_distance" valueNumeric="66723"/>
             <column name="unit" value="km"/>
-            <!-- WKT używa formatu: Longitude Latitude -->
-            <column name="path" valueComputed="ST_GeomFromText('LINESTRING(22.248743 52.060687, 22.248743 51.960678, 22.248743 51.860669)', 4326)"/>
+            <column name="path" valueComputed="ST_GeomFromText('LINESTRING(22.248743 52.060687, 22.248743 51.960678, 22.248743 51.860669)', 0)"/>
         </insert>
     </changeSet>
 

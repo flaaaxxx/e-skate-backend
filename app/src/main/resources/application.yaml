@@ -6,6 +6,7 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/changelog-master.xml
+    drop-first: true
   security:
     user:
       name: admin

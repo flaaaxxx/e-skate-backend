@@ -46,19 +46,26 @@ public class RouteController {
     public ResponseEntity<?> getRoute(@PathVariable String id) {
         return ResponseEntity.ok(routeRepository.getFullRoute(id));
     }
+}
 
-    // Dedykowana klasa wewnętrzna dla odpowiedzi
+// Dedykowana klasa wewnętrzna dla odpowiedzi
+@Data
+@AllArgsConstructor
+class RouteResponse {
+    private String type = "Feature";
+
+    @JsonRawValue // KLUCZOWE: Mówi Jacksonowi: "to już jest JSON, nie dodawaj cudzysłowów"
+    private String geometry;
+
+    private Properties properties;
+
     @Data
     @AllArgsConstructor
-    static class RouteResponse {
+    static class Properties {
         private String id;
         private String name;
         private String startDate;
         private Double totalDistance;
         private String unit;
-
-        @JsonRawValue // KLUCZOWE: Mówi Jacksonowi: "to już jest JSON, nie dodawaj cudzysłowów"
-        private String geometry;
     }
-
 }

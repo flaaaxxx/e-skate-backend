@@ -19,7 +19,7 @@ public class RouteRepository {
 
     private final DSLContext dsl;
 
-    public RouteController.RouteResponse getFullRoute(String id) {
+    public RouteResponse getFullRoute(String id) {
         return dsl.select(
                         ROUTES.ID,
                         ROUTES.NAME,
@@ -29,7 +29,17 @@ public class RouteRepository {
                         DSL.field("ST_AsGeoJSON({0})", String.class, ROUTES.PATH).as("geometry"))
                 .from(ROUTES)
                 .where(ROUTES.ID.eq(id))
-                .fetchOneInto(RouteController.RouteResponse.class);
+                .fetchOne(record -> new RouteResponse(
+                        "Feature",
+                        record.get(DSL.field("geometry", String.class)),
+                        new RouteResponse.Properties(
+                                record.get(ROUTES.ID),
+                                record.get(ROUTES.NAME),
+                                record.get(ROUTES.START_DATE) != null ? record.get(ROUTES.START_DATE).toString() : null,
+                                record.get(ROUTES.TOTAL_DISTANCE) != null ? record.get(ROUTES.TOTAL_DISTANCE).doubleValue() : null,
+                                record.get(ROUTES.UNIT)
+                        )
+                ));
     }
 
     @Transactional
