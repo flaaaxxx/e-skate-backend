@@ -4,7 +4,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>pl.flaaaxxx.eskatebackend</groupId>
     <artifactId>db-model</artifactId>
 
     <dependencies>
@@ -114,7 +113,7 @@
     </build>
 
     <parent>
-        <groupId>pl.flaaaxxx</groupId>
+        <groupId>pl.flaaaxxx.eskatebackend</groupId>
         <artifactId>e-skate-backend</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
