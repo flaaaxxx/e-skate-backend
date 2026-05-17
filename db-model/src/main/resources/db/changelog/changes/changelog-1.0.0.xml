@@ -14,10 +14,11 @@
             <column name="name" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="start_date" type="TIMESTAMP">
-                <constraints nullable="false"/>
+            <column name="start_date_trip" type="TIMESTAMP">
             </column>
-            <column name="total_distance" type="DECIMAL(15,2)"> <!-- Zwiększone, bo w JSON masz 66723 -->
+            <column name="end_date_trip" type="TIMESTAMP">
+            </column>
+            <column name="total_distance" type="DECIMAL(18,4)"> <!-- Zwiększone, bo w JSON masz 66723 -->
                 <constraints nullable="false"/>
             </column>
             <column name="unit" type="VARCHAR(10)">

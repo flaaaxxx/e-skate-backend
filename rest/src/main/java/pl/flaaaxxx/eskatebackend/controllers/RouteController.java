@@ -1,7 +1,6 @@
 package pl.flaaaxxx.eskatebackend.controllers;
 
 import com.fasterxml.jackson.annotation.JsonRawValue;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @RestController
@@ -18,32 +18,39 @@ import java.util.stream.Collectors;
 public class RouteController {
 
     private final RouteRepository routeRepository;
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @PostMapping
-    public ResponseEntity<String> saveRoute(@RequestBody RouteDto dto) {
+    public ResponseEntity<ApiResponse> saveRoute(@RequestBody RouteDto dto) {
         try {
-            // 1. Konwertujemy tablicę współrzędnych na format WKT
-            // Ważne: w WKT najpierw podajemy Longitude (Długość), potem Latitude (Szerokość)
+            // 1. Sprawdzenie, czy dane wejściowe nie są puste
+            if (dto.getGeometry() == null || dto.getGeometry().getCoordinates() == null || dto.getGeometry().getCoordinates().length < 2) {
+                return ResponseEntity.badRequest().body(new ApiResponse("Error: Route must contain at least 2 points"));
+            }
+
+            // 2. Konwertujemy tablicę współrzędnych na format WKT
+            // String.format(Locale.US, ...) gwarantuje, że koordynaty zawsze będą miały kropkę jako separator (np. 21.045), a nie przecinek!
             String wkt = "LINESTRING(" +
                     Arrays.stream(dto.getGeometry().getCoordinates())
-                            .map(coord -> coord[0] + " " + coord[1])
+                            .map(coord -> String.format(Locale.US, "%f %f", coord[0], coord[1]))
                             .collect(Collectors.joining(", ")) +
                     ")";
 
-            // 2. Wywołujemy zapis w repozytorium
+            // 3. Wywołujemy zapis w repozytorium
             routeRepository.save(dto, wkt);
 
-            return ResponseEntity.ok("Route saved successfully");
+            // Sukces: Zwracamy obiekt ApiResponse
+            return ResponseEntity.ok(new ApiResponse("Route saved successfully"));
         } catch (Exception e) {
-            return ResponseEntity.internalServerError().body("Error: " + e.getMessage());
+            // Błąd: Tutaj TEŻ musimy zwrócić obiekt ApiResponse, aby typy się zgadzały!
+            return ResponseEntity.internalServerError().body(new ApiResponse("Error: " + e.getMessage()));
         }
     }
 
     @GetMapping
     public ResponseEntity<?> getAllRoutes() {
-        List<RouteResponse> features = routeRepository.getAllRoutes();
-        return ResponseEntity.ok(new FeatureCollection(features));
+        return ResponseEntity.ok(
+                new FeatureCollection(routeRepository.getAllRoutes())
+        );
     }
 }
 
@@ -63,20 +70,21 @@ class RouteResponse {
     @AllArgsConstructor
     static class Properties {
         private String name;
-        private String startDate;
+        private String startDateTrip;
+        private String endDateTrip;
         private Double totalDistance;
         private String unit;
     }
 }
 
+
 @Data
 @AllArgsConstructor
 class FeatureCollection {
     private String type = "FeatureCollection";
-    private List<RouteResponse> features;
+    private List<RouteDto> features;
 
-    public FeatureCollection(List<RouteResponse> features) {
-        this.type = "FeatureCollection";
+    public FeatureCollection(List<RouteDto> features) {
         this.features = features;
     }
 }
