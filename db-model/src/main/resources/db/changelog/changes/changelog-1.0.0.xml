@@ -3,7 +3,7 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
 
     <!-- 1. Tabela zgodna z JSON-em -->
     <changeSet id="1-create-spatial-routes" author="eskate">
@@ -37,17 +37,5 @@
             <column name="path"/>
         </createIndex>
     </changeSet>
-
-<!--     3. Przykładowy INSERT zgodny z Twoim JSON-em-->
-<!--    <changeSet id="3-insert-sample-route" author="eskate">-->
-<!--        <insert tableName="routes">-->
-<!--            <column name="id" value="2SxW5tyVD0o"/>-->
-<!--            <column name="name" value="Trasa z dnia 10.05.2026"/>-->
-<!--            <column name="start_date" valueDate="2026-05-10T14:25:10"/>-->
-<!--            <column name="total_distance" valueNumeric="66723"/>-->
-<!--            <column name="unit" value="km"/>-->
-<!--            <column name="path" valueComputed="ST_GeomFromText('LINESTRING(22.248743 52.060687, 22.248743 51.960678, 22.248743 51.860669)', 0)"/>-->
-<!--        </insert>-->
-<!--    </changeSet>-->
 
 </databaseChangeLog>

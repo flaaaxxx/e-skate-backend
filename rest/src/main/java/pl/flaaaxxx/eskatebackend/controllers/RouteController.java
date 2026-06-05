@@ -22,16 +22,20 @@ public class RouteController {
     @PostMapping
     public ResponseEntity<ApiResponse> saveRoute(@RequestBody RouteDto dto) {
         try {
-            // 1. Sprawdzenie, czy dane wejściowe nie są puste
-            if (dto.getGeometry() == null || dto.getGeometry().getCoordinates() == null || dto.getGeometry().getCoordinates().length < 2) {
-                return ResponseEntity.badRequest().body(new ApiResponse("Error: Route must contain at least 2 points"));
+            // 1. Sprawdzenie struktury (załóżmy, że coordinates to double[][][] dla MULTILINESTRING)
+            double[][][] segments = dto.getGeometry().getCoordinates();
+            if (segments == null || segments.length == 0) {
+                return ResponseEntity.badRequest().body(new ApiResponse("Error: Route must contain segments"));
             }
 
-            // 2. Konwertujemy tablicę współrzędnych na format WKT
-            // String.format(Locale.US, ...) gwarantuje, że koordynaty zawsze będą miały kropkę jako separator (np. 21.045), a nie przecinek!
-            String wkt = "LINESTRING(" +
-                    Arrays.stream(dto.getGeometry().getCoordinates())
-                            .map(coord -> String.format(Locale.US, "%f %f", coord[0], coord[1]))
+            // 2. Budowanie formatu MULTILINESTRING((X Y, X Y), (X Y, X Y))
+            String wkt = "MULTILINESTRING(" +
+                    Arrays.stream(segments)
+                            .map(segment -> "(" +
+                                    Arrays.stream(segment)
+                                            .map(coord -> String.format(Locale.US, "%f %f", coord[0], coord[1]))
+                                            .collect(Collectors.joining(", "))
+                                    + ")")
                             .collect(Collectors.joining(", ")) +
                     ")";
 
@@ -48,6 +52,7 @@ public class RouteController {
 
     @GetMapping
     public ResponseEntity<?> getAllRoutes() {
+        System.out.println("getAllRoutes called");
         return ResponseEntity.ok(
                 new FeatureCollection(routeRepository.getAllRoutes())
         );

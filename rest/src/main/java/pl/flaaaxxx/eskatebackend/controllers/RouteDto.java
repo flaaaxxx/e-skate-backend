@@ -24,6 +24,6 @@ public class RouteDto {
     @Data
     public static class Geometry {
         private String type; // LineString
-        private double[][] coordinates;
+        private double[][][] coordinates;
     }
 }

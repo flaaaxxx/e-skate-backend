@@ -1,3 +1,5 @@
+#  https://console.aiven.io/account/a5b9ec10a03b/project/e-skate/services/mysql-1844e9d9/settings
+
 spring:
   datasource:
     url: jdbc:mysql://avnadmin:AVNS_68qA3_0yUlwb5NE2N_e@mysql-1844e9d9-e-skate.a.aivencloud.com:13926/defaultdb?ssl-mode=REQUIRED
