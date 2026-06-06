@@ -1,4 +1,4 @@
-package pl.flaaaxxx.eskatebackend.controllers;
+package pl.flaaaxxx.eskatebackend.model;
 
 import lombok.Data;
 

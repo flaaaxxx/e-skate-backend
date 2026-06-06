@@ -18,12 +18,11 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Referencja do metody
-                .csrf(AbstractHttpConfigurer::disable)
-                .formLogin(AbstractHttpConfigurer::disable)  // ← wyłącza stronę logowania
-                .httpBasic(AbstractHttpConfigurer::disable)  // ← wyłącza basic auth
-                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource())) // Referencja do metody
+            .csrf(AbstractHttpConfigurer::disable)
+            .formLogin(AbstractHttpConfigurer::disable)  // ← wyłącza stronę logowania
+            .httpBasic(AbstractHttpConfigurer::disable)  // ← wyłącza basic auth
+            .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
 
         return http.build();
     }
