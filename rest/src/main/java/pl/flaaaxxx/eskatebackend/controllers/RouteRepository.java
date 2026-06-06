@@ -62,7 +62,6 @@ public class RouteRepository {
                 });
     }
 
-
     @Transactional
     public void save(RouteDto dto, String wktPath) {
         String id = UUID.randomUUID().toString().replace("-", "").substring(0, 11);

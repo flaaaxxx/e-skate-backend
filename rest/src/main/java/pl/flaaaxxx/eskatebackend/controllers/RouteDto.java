@@ -23,7 +23,7 @@ public class RouteDto {
 
     @Data
     public static class Geometry {
-        private String type; // LineString
+        private String type;
         private double[][][] coordinates;
     }
 }

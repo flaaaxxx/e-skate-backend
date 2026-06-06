@@ -59,30 +59,6 @@ public class RouteController {
     }
 }
 
-// Dedykowana klasa wewnętrzna dla odpowiedzi
-@Data
-@AllArgsConstructor
-class RouteResponse {
-    private String type = "Feature";
-    private String id;
-
-    @JsonRawValue // KLUCZOWE: Mówi Jacksonowi: "to już jest JSON, nie dodawaj cudzysłowów"
-    private String geometry;
-
-    private Properties properties;
-
-    @Data
-    @AllArgsConstructor
-    static class Properties {
-        private String name;
-        private String startDateTrip;
-        private String endDateTrip;
-        private Double totalDistance;
-        private String unit;
-    }
-}
-
-
 @Data
 @AllArgsConstructor
 class FeatureCollection {
