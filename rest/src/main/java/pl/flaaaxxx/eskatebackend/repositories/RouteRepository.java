@@ -31,8 +31,8 @@ public class RouteRepository {
                 .set(ROUTES.NAME, dto.getProperties().getName())
                 .set(ROUTES.START_DATE_TRIP, dto.getProperties().getStartDateTrip())
                 .set(ROUTES.END_DATE_TRIP, dto.getProperties().getEndDateTrip())
-                .set(ROUTES.TOTAL_DISTANCE, dto.getProperties().getDistance() != null
-                        ? BigDecimal.valueOf(dto.getProperties().getDistance())
+                .set(ROUTES.TOTAL_DISTANCE, dto.getProperties().getTotalDistance() != null
+                        ? BigDecimal.valueOf(dto.getProperties().getTotalDistance())
                         : null).set(ROUTES.UNIT, dto.getProperties().getUnit())
                 // Konwersja Stringa WKT na typ GEOMETRY w MySQL
                 .set(ROUTES.PATH, DSL.field("ST_GeomFromText({0}, 0)", ROUTES.PATH.getType(), wktPath))
@@ -79,7 +79,7 @@ public class RouteRepository {
                         properties.setStartDateTrip(record.get(ROUTES.START_DATE_TRIP));
                         properties.setEndDateTrip(record.get(ROUTES.END_DATE_TRIP));
                         properties.setUnit(record.get(ROUTES.UNIT));
-                        properties.setDistance(
+                        properties.setTotalDistance(
                                 record.get(ROUTES.TOTAL_DISTANCE) != null ? record.get(ROUTES.TOTAL_DISTANCE).doubleValue() : null
                         );
 

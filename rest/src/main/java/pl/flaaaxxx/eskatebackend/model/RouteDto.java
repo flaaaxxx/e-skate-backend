@@ -17,7 +17,7 @@ public class RouteDto {
         private String name;
         private LocalDateTime startDateTrip;
         private LocalDateTime endDateTrip;
-        private Double distance;
+        private Double totalDistance;
         private String unit;
     }
 
