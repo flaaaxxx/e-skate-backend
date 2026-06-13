@@ -46,7 +46,7 @@ public class UserLocationRepository {
            .doUpdate()                      // ...to zrób UPDATE zamiast INSERT
            .set(USER_LOCATIONS.LONGITUDE, longitude)
            .set(USER_LOCATIONS.LATITUDE, latitude)
-            .set(USER_LOCATIONS.BEARING, bearing)
+           .set(USER_LOCATIONS.BEARING, bearing)
            .set(USER_LOCATIONS.UPDATED_AT, LocalDateTime.now())
            .execute();
     }
