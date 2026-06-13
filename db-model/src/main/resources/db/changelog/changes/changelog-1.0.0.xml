@@ -38,4 +38,20 @@
         </createIndex>
     </changeSet>
 
+    <!-- 3. Tabela przechowująca informacje o pozycji gps użytkowników -->
+    <changeSet id="3-create-user-gps-position-v2" author="eskate">
+        <createTable tableName="user_locations">
+            <column name="name" type="VARCHAR(255)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="longitude" type="DECIMAL(10,7)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="latitude" type="DECIMAL(10,7)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
 </databaseChangeLog>
