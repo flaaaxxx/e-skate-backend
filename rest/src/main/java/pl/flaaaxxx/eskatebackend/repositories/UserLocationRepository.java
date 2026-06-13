@@ -35,16 +35,18 @@ public class UserLocationRepository {
      * Zapisuje pozycję użytkownika.
      * Jeśli 'name' już istnieje w bazie, zaktualizuje współrzędne i czas.
      */
-    public void save(String name, BigDecimal longitude, BigDecimal latitude) {
+    public void save(String name, BigDecimal longitude, BigDecimal latitude, BigDecimal bearing) {
         dsl.insertInto(USER_LOCATIONS)
            .set(USER_LOCATIONS.NAME, name)
            .set(USER_LOCATIONS.LONGITUDE, longitude)
            .set(USER_LOCATIONS.LATITUDE, latitude)
+           .set(USER_LOCATIONS.BEARING, bearing)
            .set(USER_LOCATIONS.UPDATED_AT, LocalDateTime.now())
            .onConflict(USER_LOCATIONS.NAME) // Jeśli wystąpi konflikt na kolumnie 'name'
            .doUpdate()                      // ...to zrób UPDATE zamiast INSERT
            .set(USER_LOCATIONS.LONGITUDE, longitude)
            .set(USER_LOCATIONS.LATITUDE, latitude)
+            .set(USER_LOCATIONS.BEARING, bearing)
            .set(USER_LOCATIONS.UPDATED_AT, LocalDateTime.now())
            .execute();
     }

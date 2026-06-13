@@ -7,7 +7,6 @@ import pl.flaaaxxx.eskatebackend.repositories.UserLocationRepository;
 import pl.flaaaxxx.eskatebackend.tables.pojos.UserLocations;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api/user-locations")
@@ -17,7 +16,7 @@ public class UserLocationController {
     private final UserLocationRepository userLocationRepository;
 
     /**
-     * 1. METODA DO WYSZUKIWANIA (GET)
+     * METODA DO WYSZUKIWANIA (GET)
      * Pobiera aktualną pozycję użytkownika na podstawie jego nazwy (wyszukiwanie po 'name')
      * Endpoint: GET /api/user-locations/{name}
      */
@@ -29,7 +28,7 @@ public class UserLocationController {
     }
 
     /**
-     * 2. METODA DO ZAPISU / AKTUALIZACJI (POST)
+     * METODA DO ZAPISU / AKTUALIZACJI (POST)
      * Zapisuje nową pozycję lub aktualizuje istniejącą (UPSERT)
      * Endpoint: POST /api/user-locations
      */
@@ -38,7 +37,8 @@ public class UserLocationController {
         userLocationRepository.save(
                 request.name(),
                 request.longitude(),
-                request.latitude()
+                request.latitude(),
+                request.bearing()
         );
         return ResponseEntity.ok().build(); // Zwraca czyste HTTP 200 (Success)
     }
@@ -48,13 +48,6 @@ public class UserLocationController {
 record UserLocationRequest(
         String name,
         BigDecimal longitude,
-        BigDecimal latitude
-) {}
-
-// Rekord dla odpowiedzi GET (Co zwracamy do frontendu)
-record UserLocationResponse(
-        String name,
-        BigDecimal longitude,
         BigDecimal latitude,
-        LocalDateTime updatedAt
+        BigDecimal bearing
 ) {}

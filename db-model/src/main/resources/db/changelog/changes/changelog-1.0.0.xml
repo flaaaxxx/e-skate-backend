@@ -54,4 +54,12 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="4-add-bearing-to-user-locations" author="eskate">
+        <addColumn tableName="user_locations">
+            <column name="bearing" type="DECIMAL(5,2)" defaultValueNumeric="0.0">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>
