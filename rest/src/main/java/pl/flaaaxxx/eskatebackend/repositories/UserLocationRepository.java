@@ -7,6 +7,8 @@ import pl.flaaaxxx.eskatebackend.tables.pojos.UserLocations;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.util.Optional;
 
 import static pl.flaaaxxx.eskatebackend.tables.UserLocations.USER_LOCATIONS;
@@ -41,13 +43,13 @@ public class UserLocationRepository {
            .set(USER_LOCATIONS.LONGITUDE, longitude)
            .set(USER_LOCATIONS.LATITUDE, latitude)
            .set(USER_LOCATIONS.BEARING, bearing)
-           .set(USER_LOCATIONS.UPDATED_AT, LocalDateTime.now())
+           .set(USER_LOCATIONS.UPDATED_AT, LocalDateTime.now(ZoneId.of("Europe/Warsaw")))
            .onConflict(USER_LOCATIONS.NAME) // Jeśli wystąpi konflikt na kolumnie 'name'
            .doUpdate()                      // ...to zrób UPDATE zamiast INSERT
            .set(USER_LOCATIONS.LONGITUDE, longitude)
            .set(USER_LOCATIONS.LATITUDE, latitude)
            .set(USER_LOCATIONS.BEARING, bearing)
-           .set(USER_LOCATIONS.UPDATED_AT, LocalDateTime.now())
+           .set(USER_LOCATIONS.UPDATED_AT, LocalDateTime.now(ZoneId.of("Europe/Warsaw")))
            .execute();
     }
 }
