@@ -38,7 +38,8 @@ public class UserLocationController {
                 request.name(),
                 request.longitude(),
                 request.latitude(),
-                request.bearing()
+                request.bearing(),
+                request.battery()
         );
         return ResponseEntity.ok().build(); // Zwraca czyste HTTP 200 (Success)
     }
@@ -49,5 +50,6 @@ record UserLocationRequest(
         String name,
         BigDecimal longitude,
         BigDecimal latitude,
-        BigDecimal bearing
+        BigDecimal bearing,
+        Integer battery
 ) {}

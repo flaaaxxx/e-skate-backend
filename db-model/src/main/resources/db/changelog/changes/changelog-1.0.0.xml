@@ -51,6 +51,9 @@
                 <constraints nullable="false"/>
             </column>
             <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="battery" type="INT">
+                <constraints nullable="true"/>
+            </column>
         </createTable>
     </changeSet>
 

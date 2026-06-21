@@ -7,7 +7,6 @@ import pl.flaaaxxx.eskatebackend.tables.pojos.UserLocations;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.util.Optional;
 
@@ -37,18 +36,20 @@ public class UserLocationRepository {
      * Zapisuje pozycję użytkownika.
      * Jeśli 'name' już istnieje w bazie, zaktualizuje współrzędne i czas.
      */
-    public void save(String name, BigDecimal longitude, BigDecimal latitude, BigDecimal bearing) {
+    public void save(String name, BigDecimal longitude, BigDecimal latitude, BigDecimal bearing, Integer battery) {
         dsl.insertInto(USER_LOCATIONS)
            .set(USER_LOCATIONS.NAME, name)
            .set(USER_LOCATIONS.LONGITUDE, longitude)
            .set(USER_LOCATIONS.LATITUDE, latitude)
            .set(USER_LOCATIONS.BEARING, bearing)
+           .set(USER_LOCATIONS.BATTERY, battery)
            .set(USER_LOCATIONS.UPDATED_AT, LocalDateTime.now(ZoneId.of("Europe/Warsaw")))
            .onConflict(USER_LOCATIONS.NAME) // Jeśli wystąpi konflikt na kolumnie 'name'
            .doUpdate()                      // ...to zrób UPDATE zamiast INSERT
            .set(USER_LOCATIONS.LONGITUDE, longitude)
            .set(USER_LOCATIONS.LATITUDE, latitude)
            .set(USER_LOCATIONS.BEARING, bearing)
+           .set(USER_LOCATIONS.BATTERY, battery)
            .set(USER_LOCATIONS.UPDATED_AT, LocalDateTime.now(ZoneId.of("Europe/Warsaw")))
            .execute();
     }
