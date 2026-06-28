@@ -8,6 +8,7 @@ import pl.flaaaxxx.eskatebackend.repositories.UserLocationRepository;
 import pl.flaaaxxx.eskatebackend.tables.pojos.UserLocations;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/user-locations")
@@ -41,8 +42,8 @@ public class UserLocationController {
      * Endpoint: GET /api/user-locations/{name}
      */
     @GetMapping("/{name}")
-    public ResponseEntity<UserLocations> getLocationByName(@PathVariable String name) {
-        return userLocationRepository.findByName(name)
+    public ResponseEntity<UserLocations> getLocationByName(@PathVariable List<String> names) {
+        return userLocationRepository.findByNames(names)
                                      .map(ResponseEntity::ok)
                                      .orElseGet(() -> ResponseEntity.notFound().build());
     }

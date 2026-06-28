@@ -2,9 +2,7 @@ package pl.flaaaxxx.eskatebackend.repositories;
 
 import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
-import org.jooq.impl.DSL;
 import org.springframework.stereotype.Repository;
-import pl.flaaaxxx.eskatebackend.model.RouteDto;
 import pl.flaaaxxx.eskatebackend.tables.pojos.UserLocations;
 
 import java.math.BigDecimal;
@@ -13,7 +11,6 @@ import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 
-import static pl.flaaaxxx.eskatebackend.Tables.ROUTES;
 import static pl.flaaaxxx.eskatebackend.tables.UserLocations.USER_LOCATIONS;
 
 @Repository
@@ -22,13 +19,13 @@ public class UserLocationRepository {
 
     private final DSLContext dsl;
 
-
     /**
      * Pobiera tylko TYLKO JEDNĄ, najnowszą pozycję użytkownika
+     * @param names lista nazw użytkowników
      * */
-    public Optional<UserLocations> findByName(String name) {
+    public Optional<UserLocations> findByNames(List<String> names) {
         UserLocations latestLocation = dsl.selectFrom(USER_LOCATIONS)
-                                          .where(USER_LOCATIONS.NAME.eq(name))
+                                          .where(USER_LOCATIONS.NAME.in(names))
                                           .orderBy(USER_LOCATIONS.UPDATED_AT.desc()) // Najnowszy na górze
                                           .limit(1)                     // Bierzemy tylko jeden rekord
                                           .fetchOneInto(UserLocations.class);
@@ -39,6 +36,11 @@ public class UserLocationRepository {
     /**
      * Zapisuje pozycję użytkownika.
      * Jeśli 'name' już istnieje w bazie, zaktualizuje współrzędne i czas.
+     * @param name
+     * @param longitude
+     * @param latitude
+     * @param bearing
+     * @param battery
      */
     public void save(String name, BigDecimal longitude, BigDecimal latitude, BigDecimal bearing, Integer battery) {
         dsl.insertInto(USER_LOCATIONS)
