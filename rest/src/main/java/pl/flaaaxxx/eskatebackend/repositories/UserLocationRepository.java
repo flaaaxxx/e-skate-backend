@@ -2,14 +2,18 @@ package pl.flaaaxxx.eskatebackend.repositories;
 
 import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
+import org.jooq.impl.DSL;
 import org.springframework.stereotype.Repository;
+import pl.flaaaxxx.eskatebackend.model.RouteDto;
 import pl.flaaaxxx.eskatebackend.tables.pojos.UserLocations;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 import java.util.Optional;
 
+import static pl.flaaaxxx.eskatebackend.Tables.ROUTES;
 import static pl.flaaaxxx.eskatebackend.tables.UserLocations.USER_LOCATIONS;
 
 @Repository
@@ -52,5 +56,22 @@ public class UserLocationRepository {
            .set(USER_LOCATIONS.BATTERY, battery)
            .set(USER_LOCATIONS.UPDATED_AT, LocalDateTime.now(ZoneId.of("Europe/Warsaw")))
            .execute();
+    }
+
+    public long count() {
+        return dsl.selectCount()
+                  .from(USER_LOCATIONS)
+                  .fetchOptional(0, Long.class)
+                  .orElse(0L);
+    }
+
+    public List<UserLocations> getAllPaged(int page, int size) {
+        int offset = page * size; // Wyliczamy od którego rekordu zacząć pobieranie
+
+        return dsl.select(USER_LOCATIONS)
+                  .from(USER_LOCATIONS)
+                  .limit(size)    // Ile rekordów pobrać
+                  .offset(offset) // Ile rekordów pominąć
+                  .fetchInto(UserLocations.class);
     }
 }

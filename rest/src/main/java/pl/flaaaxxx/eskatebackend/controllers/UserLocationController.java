@@ -3,6 +3,7 @@ package pl.flaaaxxx.eskatebackend.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.flaaaxxx.eskatebackend.model.PagedUserLocationResponse;
 import pl.flaaaxxx.eskatebackend.repositories.UserLocationRepository;
 import pl.flaaaxxx.eskatebackend.tables.pojos.UserLocations;
 
@@ -23,8 +24,27 @@ public class UserLocationController {
     @GetMapping("/{name}")
     public ResponseEntity<UserLocations> getLocationByName(@PathVariable String name) {
         return userLocationRepository.findByName(name)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                                     .map(ResponseEntity::ok)
+                                     .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping
+    public ResponseEntity<PagedUserLocationResponse> getAll(@RequestParam(defaultValue = "0") int page,
+                                                            @RequestParam(defaultValue = "10") int size) {
+
+        var totalElements = userLocationRepository.count();
+        var totalPages = (int) Math.ceil((double) totalElements / size);
+
+        var response = PagedUserLocationResponse.builder()
+                                                .data(userLocationRepository.getAllPaged(page, size))
+                                                .currentPage(page)
+                                                .pageSize(size)
+                                                .totalElements(totalElements)
+                                                .totalPages(totalPages)
+                                                .build();
+
+        return ResponseEntity.ok(response);
+
     }
 
     /**
