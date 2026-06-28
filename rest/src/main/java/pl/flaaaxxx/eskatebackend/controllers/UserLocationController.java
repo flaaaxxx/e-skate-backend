@@ -16,6 +16,25 @@ public class UserLocationController {
 
     private final UserLocationRepository userLocationRepository;
 
+    @GetMapping
+    public ResponseEntity<PagedUserLocationResponse> getAll(@RequestParam(defaultValue = "0") int page,
+                                                            @RequestParam(defaultValue = "10") int size) {
+
+        var totalElements = userLocationRepository.count();
+        var totalPages = (int) Math.ceil((double) totalElements / size);
+
+        var response = PagedUserLocationResponse.builder()
+                .data(userLocationRepository.getAllPaged(page, size))
+                .currentPage(page)
+                .pageSize(size)
+                .totalElements(totalElements)
+                .totalPages(totalPages)
+                .build();
+
+        return ResponseEntity.ok(response);
+
+    }
+
     /**
      * METODA DO WYSZUKIWANIA (GET)
      * Pobiera aktualną pozycję użytkownika na podstawie jego nazwy (wyszukiwanie po 'name')
@@ -26,25 +45,6 @@ public class UserLocationController {
         return userLocationRepository.findByName(name)
                                      .map(ResponseEntity::ok)
                                      .orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    @GetMapping
-    public ResponseEntity<PagedUserLocationResponse> getAll(@RequestParam(defaultValue = "0") int page,
-                                                            @RequestParam(defaultValue = "10") int size) {
-
-        var totalElements = userLocationRepository.count();
-        var totalPages = (int) Math.ceil((double) totalElements / size);
-
-        var response = PagedUserLocationResponse.builder()
-                                                .data(userLocationRepository.getAllPaged(page, size))
-                                                .currentPage(page)
-                                                .pageSize(size)
-                                                .totalElements(totalElements)
-                                                .totalPages(totalPages)
-                                                .build();
-
-        return ResponseEntity.ok(response);
-
     }
 
     /**

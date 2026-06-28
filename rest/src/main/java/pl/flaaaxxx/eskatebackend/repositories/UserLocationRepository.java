@@ -68,8 +68,7 @@ public class UserLocationRepository {
     public List<UserLocations> getAllPaged(int page, int size) {
         int offset = page * size; // Wyliczamy od którego rekordu zacząć pobieranie
 
-        return dsl.select(USER_LOCATIONS)
-                  .from(USER_LOCATIONS)
+        return dsl.selectFrom(USER_LOCATIONS)
                   .limit(size)    // Ile rekordów pobrać
                   .offset(offset) // Ile rekordów pominąć
                   .fetchInto(UserLocations.class);
