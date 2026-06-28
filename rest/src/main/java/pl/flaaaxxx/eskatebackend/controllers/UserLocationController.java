@@ -42,7 +42,7 @@ public class UserLocationController {
      * Endpoint: GET /api/user-locations/{name}
      */
     @GetMapping("/{name}")
-    public ResponseEntity<UserLocations> getLocationByName(@PathVariable List<String> names) {
+    public ResponseEntity<UserLocations> getLocationByNames(@PathVariable List<String> names) {
         return userLocationRepository.findByNames(names)
                                      .map(ResponseEntity::ok)
                                      .orElseGet(() -> ResponseEntity.notFound().build());
