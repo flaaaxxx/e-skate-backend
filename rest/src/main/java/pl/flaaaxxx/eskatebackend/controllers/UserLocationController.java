@@ -41,7 +41,7 @@ public class UserLocationController {
      * Pobiera aktualną pozycję użytkownika na podstawie jego nazwy (wyszukiwanie po 'name')
      * Endpoint: GET /api/user-locations/{name}
      */
-    @GetMapping
+    @GetMapping("/get-locations")
     public ResponseEntity<UserLocations> getLocationByNames(@RequestParam List<String> names) {
         return userLocationRepository.findByNames(names)
                                      .map(ResponseEntity::ok)
