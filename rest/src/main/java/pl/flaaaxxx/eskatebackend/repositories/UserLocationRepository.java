@@ -27,7 +27,6 @@ public class UserLocationRepository {
         UserLocations latestLocation = dsl.selectFrom(USER_LOCATIONS)
                                           .where(USER_LOCATIONS.NAME.in(names))
                                           .orderBy(USER_LOCATIONS.UPDATED_AT.desc()) // Najnowszy na górze
-                                          .limit(1)                     // Bierzemy tylko jeden rekord
                                           .fetchOneInto(UserLocations.class);
 
         return Optional.ofNullable(latestLocation);
