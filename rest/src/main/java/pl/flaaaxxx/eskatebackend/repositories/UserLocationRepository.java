@@ -23,13 +23,11 @@ public class UserLocationRepository {
      * Pobiera tylko TYLKO JEDNĄ, najnowszą pozycję użytkownika
      * @param names lista nazw użytkowników
      * */
-    public Optional<UserLocations> findByNames(List<String> names) {
-        UserLocations latestLocation = dsl.selectFrom(USER_LOCATIONS)
+    public List<UserLocations> findByNames(List<String> names) {
+        return dsl.selectFrom(USER_LOCATIONS)
                                           .where(USER_LOCATIONS.NAME.in(names))
                                           .orderBy(USER_LOCATIONS.UPDATED_AT.desc()) // Najnowszy na górze
-                                          .fetchOneInto(UserLocations.class);
-
-        return Optional.ofNullable(latestLocation);
+                                          .fetchInto(UserLocations.class);
     }
 
     /**
